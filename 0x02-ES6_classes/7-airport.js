@@ -2,40 +2,21 @@
 export default class Airport {
   // Constructor to initialize the class attributes
   constructor(name, code) {
-    this.name = name; // Set the name attribute
-    this.code = code; // Set the code attribute
-  }
-
-  // Getter for the name attribute
-  get name() {
-    return this._name;
-  }
-
-  // Setter for the name attribute
-  set name(name) {
-    // Check if the provided name is a string or an instance of String
-    if (typeof name !== 'string' && !(name instanceof String)) {
+    // Check if the provided 'name' is a string; throw an error if it's not
+    if (typeof name !== 'string') {
       throw new TypeError('Name must be a string');
     }
-    this._name = name; // Set the private _name attribute
-  }
-
-  // Getter for the code attribute
-  get code() {
-    return this._code;
-  }
-
-  // Setter for the code attribute
-  set code(code) {
-    // Check if the provided code is a string or an instance of String
-    if (typeof code !== 'string' && !(code instanceof String)) {
+    // Check if the provided 'code' is a string; throw an error if it's not
+    if (typeof code !== 'string') {
       throw new TypeError('Code must be a string');
     }
-    this._code = code; // Set the private _code attribute
+    this._name = name; // Set the name attribute with an underscore
+    this._code = code; // Set the code attribute with an underscore
   }
 
-  // Override the default toString method to return the airport code
-  toString() {
-    return `[${this._code}]`;
+  // Getter for the default toString tag
+  get [Symbol.toStringTag]() {
+    // Return the airport code as the default tag
+    return this._code;
   }
 }
