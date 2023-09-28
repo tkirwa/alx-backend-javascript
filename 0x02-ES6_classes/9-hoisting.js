@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable max-classes-per-file */
 
 // Define the HolbertonClass class
 export class HolbertonClass {
@@ -22,12 +21,9 @@ export class HolbertonClass {
 // Define the StudentHolberton class
 export class StudentHolberton {
   constructor(firstName, lastName, holbertonClass) {
-    // Initialize the _firstName attribute with the provided 'firstName'
-    this._firstName = firstName;
-    // Initialize the _lastName attribute with the provided 'lastName'
-    this._lastName = lastName;
-    // Initialize the _holbertonClass attribute with the provided 'holbertonClass'
-    this._holbertonClass = holbertonClass;
+    this._firstName = firstName; // Initialize the _firstName attribute with the provided 'firstName'
+    this._lastName = lastName; // Initialize the _lastName attribute with the provided 'lastName'
+    this._holbertonClass = holbertonClass; // Initialize the _holbertonClass attribute with the provided 'holbertonClass'
   }
 
   // Getter for the full name of the student
