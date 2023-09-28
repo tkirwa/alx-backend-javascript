@@ -1,19 +1,13 @@
 // Define the Building class
 export default class Building {
+  // Constructor to initialize the class attributes
   constructor(sqft) {
-    // Check if the constructor is called directly on the Building class
-    if (this.constructor !== Building) {
-      // Get the property names of the constructor's prototype
-      const props = Object.getOwnPropertyNames(this.constructor.prototype);
-      // Check if there is no 'evacuationWarningMessage' method in the prototype
-      if (!props.find((e) => e === 'evacuationWarningMessage')) {
-        // Throw an error if the subclass does not override 'evacuationWarningMessage'
-        throw new Error(
-          'Class extending Building must override evacuationWarningMessage'
-        );
-      }
+    // Check if sqft is not a number and throw an error if it's not
+    if (typeof sqft !== 'number') {
+      throw new Error('Sqft must be a number');
     }
     this._sqft = sqft; // Set the sqft attribute with an underscore
+    this.evacuationWarningMessage(); // Call the evacuationWarningMessage method
   }
 
   // Getter for the sqft attribute
@@ -22,11 +16,16 @@ export default class Building {
   }
 
   // Setter for the sqft attribute
-  set sqft(sqft) {
-    // Check if the provided sqft is not a number or an instance of Number
-    if (typeof sqft !== 'number' && !(sqft instanceof Number)) {
-      throw new TypeError('Sqft must be a number');
+  set sqft(value) {
+    this._sqft = value;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  // Abstract method that should be overridden by subclasses
+  evacuationWarningMessage() {
+    // Check if the class name is 'Building'; if not, throw an error
+    if (this.constructor.name !== 'Building') {
+      throw new Error('Class extending Building must override evacuationWarningMessage');
     }
-    this._sqft = sqft; // Set the private _sqft attribute
   }
 }
