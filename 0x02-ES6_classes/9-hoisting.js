@@ -24,7 +24,8 @@ export class StudentHolberton {
   constructor(firstName, lastName, holbertonClass) {
     // Initialize the _firstName attribute with the provided 'firstName'
     this._firstName = firstName;
-    this._lastName = lastName; // Initialize the _lastName attribute with the provided 'lastName'
+    // Initialize the _lastName attribute with the provided 'lastName'
+    this._lastName = lastName;
     // Initialize the _holbertonClass attribute with the provided 'holbertonClass'
     this._holbertonClass = holbertonClass;
   }
@@ -41,7 +42,7 @@ export class StudentHolberton {
 
   // Getter for the full student description
   get fullStudentDescription() {
-    return `${this.fullName} - ${this.holbertonClass.year} - ${this.holbertonClass.location}`;
+    return `${this._firstName} ${this._lastName} - ${this._holbertonClass.year} - ${this._holbertonClass.location}`;
     // Return the full student description including name, year, and location
   }
 }
