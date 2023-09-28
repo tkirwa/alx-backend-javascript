@@ -1,12 +1,15 @@
-// Import the ClassRoom class from the '0-classroom' module
-import ClassRoom from './0-classroom';
+// Import the Classroom class from the '0-classroom' module
+import Classroom from './0-classroom';
 
 // Define the initializeRooms function
-export default function initializeRooms () {
-  // Create and return an array of ClassRoom objects with specific sizes
+function initializeRooms() {
+  // Create and return an array of Classroom objects with specific sizes
   return [
-    new ClassRoom(19), // Create a ClassRoom object with size 19
-    new ClassRoom(20), // Create a ClassRoom object with size 20
-    new ClassRoom(34), // Create a ClassRoom object with size 34
+    new Classroom(19), // Create a Classroom object with size 19
+    new Classroom(20), // Create a Classroom object with size 20
+    new Classroom(34), // Create a Classroom object with size 34
   ];
 }
+
+// Export the initializeRooms function as the default export of this module
+export default initializeRooms;
