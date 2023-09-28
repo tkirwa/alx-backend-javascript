@@ -1,7 +1,7 @@
 // 4-pricing.js
 
 // Import the Currency class
-import Currency from './3-currency.js';
+import Currency from './3-currency';
 
 // Define the Pricing class
 export default class Pricing {
