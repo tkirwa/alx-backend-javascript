@@ -1,7 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-classes-per-file */
 
-// Disable eslint warnings for underscores in property names and for the maximum number of classes per file
+// Disable eslint warnings for underscores in property names and
+// for the maximum number of classes per file
 
 export class HolbertonClass {
   // Define a class called 'HolbertonClass'
@@ -32,7 +33,8 @@ const class2020 = new HolbertonClass(2020, 'San Francisco');
 export class StudentHolberton {
   // Define a class called 'StudentHolberton'
   constructor(firstName, lastName, holbertonClass) {
-    // Constructor for 'StudentHolberton' with 'firstName', 'lastName', and 'holbertonClass' parameters
+    // Constructor for 'StudentHolberton' with 'firstName',
+    // 'lastName', and 'holbertonClass' parameters
     this._firstName = firstName;
     // Initialize the '_firstName' property with the 'firstName' parameter
     this._lastName = lastName;
