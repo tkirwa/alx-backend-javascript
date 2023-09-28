@@ -6,10 +6,10 @@ export default class Building {
       // Get the property names of the constructor's prototype
       const props = Object.getOwnPropertyNames(this.constructor.prototype);
       // Check if there is no 'evacuationWarningMessage' method in the prototype
-      if (!props.find((e) => e === 'evacuationWarningMessage')) {
+      if (!props.find((e) => e === "evacuationWarningMessage")) {
         // Throw an error if the subclass does not override 'evacuationWarningMessage'
         throw new Error(
-          'Class extending Building must override evacuationWarningMessage'
+          "Class extending Building must override evacuationWarningMessage"
         );
       }
     }
@@ -24,8 +24,8 @@ export default class Building {
   // Setter for the sqft attribute
   set sqft(sqft) {
     // Check if the provided sqft is not a number or an instance of Number
-    if (typeof sqft !== 'number' && !(sqft instanceof Number)) {
-      throw new TypeError('Sqft must be a number');
+    if (typeof sqft !== "number" && !(sqft instanceof Number)) {
+      throw new TypeError("Sqft must be a number");
     }
     this._sqft = sqft; // Set the private _sqft attribute
   }
