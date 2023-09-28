@@ -2,7 +2,7 @@
 
 import ClassRoom from './0-classroom.js';
 
-function initializeRooms() {
+export default function initializeRooms() {
   // Create an array of ClassRoom objects with specified sizes
   const rooms = [
     new ClassRoom(19),
@@ -12,5 +12,3 @@ function initializeRooms() {
 
   return rooms;
 }
-
-export default initializeRooms;
