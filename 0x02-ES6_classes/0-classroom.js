@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 // 0-classroom.js
 
 // Define the ClassRoom class
