@@ -10,7 +10,7 @@ function cleanSet(set, startString) {
     // Check if the value starts with the specified startString
     if (value.startsWith(startString)) {
       // Append the rest of the string to the result
-      result += `${value.slice(startString.length)}-`;
+      result += value.slice(startString.length) + '-';
     }
   }
 
