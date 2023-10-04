@@ -46,3 +46,25 @@ function printTeacher(firstName: string, lastName: string): string {
 interface printTeacherFunction {
   (firstName: string, lastName: string): string;
 }
+
+interface StudentInterface {
+  new (firstName: string, lastName: string): StudentClass;
+  workOnHomework(): string;
+  displayName(): string;
+}
+
+// main.ts
+
+class StudentClass implements StudentInterface {
+  constructor(private firstName: string, private lastName: string) {}
+
+  workOnHomework(): string {
+    return 'Currently working';
+  }
+
+  displayName(): string {
+    return this.firstName;
+  }
+}
+
+export { StudentClass };
