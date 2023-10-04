@@ -34,3 +34,15 @@ const director1: Directors = {
 };
 
 console.log(director1);
+
+
+function printTeacher(firstName: string, lastName: string): string {
+  const firstLetter = firstName.charAt(0).toUpperCase();
+  const fullLastName = lastName.charAt(0).toUpperCase() + lastName.slice(1);
+  return `${firstLetter}. ${fullLastName}`;
+}
+
+// Define an interface for the printTeacher function as printTeacherFunction
+interface printTeacherFunction {
+  (firstName: string, lastName: string): string;
+}
