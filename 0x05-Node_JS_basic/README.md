@@ -98,7 +98,7 @@ This a project to learn NodeJS and ExpressJS basics.
 ## Repo
 
 - GitHub repository: [alx-backend-javascript](https://github.com/tkirwa/alx-backend-javascript)
-- Directory: 0x05-Node_JS_basic
+- Directory: [0x05-Node_JS_basic](https://github.com/tkirwa/alx-backend-javascript/tree/main/0x05-Node_JS_basic)
 
 ## Contributing
 
