@@ -9,4 +9,3 @@ function sumMajorCredits(subject1: MajorCredits, subject2: MajorCredits): MajorC
     const totalCredits = subject1.credits + subject2.credits;
     return { credits: totalCredits, _minorBrand: Symbol() };
   }
-  
