@@ -1,23 +1,23 @@
 // Import the required modules
-const http = require("http");
-const fs = require("fs");
+const http = require('http');
+const fs = require('fs');
 
 // Define the server's host and port
 const PORT = 1245;
-const HOST = "localhost";
+const HOST = 'localhost';
 
 // Create the server
 const app = http.createServer();
 
 // Define the path to the database file
-const DB_FILE = process.argv.length > 2 ? process.argv[2] : "";
+const DB_FILE = process.argv.length > 2 ? process.argv[2] : '';
 
 // Define the function to count students
 const countStudents = (dataPath) =>
   new Promise((resolve, reject) => {
     // If no data path is provided, reject the promise
     if (!dataPath) {
-      reject(new Error("Cannot load the database"));
+      reject(new Error('Cannot load the database'));
     }
     // If a data path is provided
     if (dataPath) {
@@ -25,18 +25,18 @@ const countStudents = (dataPath) =>
       fs.readFile(dataPath, (err, data) => {
         // If there's an error (e.g., the file does not exist), reject the promise
         if (err) {
-          reject(new Error("Cannot load the database"));
+          reject(new Error('Cannot load the database'));
         }
         // If the file was read successfully
         if (data) {
           // Initialize an array to store the parts of the report
           const reportParts = [];
           // Split the file into lines
-          const fileLines = data.toString("utf-8").trim().split("\n");
+          const fileLines = data.toString('utf-8').trim().split('\n');
           // Initialize an object to store the student groups
           const studentGroups = {};
           // Get the field names from the first line of the file
-          const dbFieldNames = fileLines[0].split(",");
+          const dbFieldNames = fileLines[0].split(',');
           // Get the property names of the students (all fields except the last one)
           const studentPropNames = dbFieldNames.slice(
             0,
@@ -46,7 +46,7 @@ const countStudents = (dataPath) =>
           // Iterate over each line (student) in the file (except the first line)
           for (const line of fileLines.slice(1)) {
             // Split the line into fields
-            const studentRecord = line.split(",");
+            const studentRecord = line.split(',');
             // Get the property values of the student (all fields except the last one)
             const studentPropValues = studentRecord.slice(
               0,
@@ -61,7 +61,7 @@ const countStudents = (dataPath) =>
             // Map the property names to the property values and add the student to the field group
             const studentEntries = studentPropNames.map((propName, idx) => [
               propName,
-              studentPropValues[idx],
+              studentPropValues[idx]
             ]);
             studentGroups[field].push(Object.fromEntries(studentEntries));
           }
@@ -77,14 +77,14 @@ const countStudents = (dataPath) =>
             // Get the names of the students in the field group
             const studentNames = group
               .map((student) => student.firstname)
-              .join(", ");
+              .join(', ');
             // Add the number of students and the students' names in the field group to the report
             reportParts.push(
               `Number of students in ${field}: ${group.length}. List: ${studentNames}`
             );
           }
           // Resolve the promise with the report
-          resolve(reportParts.join("\n"));
+          resolve(reportParts.join('\n'));
         }
       });
     }
@@ -93,24 +93,24 @@ const countStudents = (dataPath) =>
 // Define the route handlers
 const SERVER_ROUTE_HANDLERS = [
   {
-    route: "/",
-    handler(_, res) {
+    route: '/',
+    handler (_, res) {
       // Define the response text
-      const responseText = "Hello Holberton School!";
+      const responseText = 'Hello Holberton School!';
       // Set the headers of the response
-      res.setHeader("Content-Type", "text/plain");
-      res.setHeader("Content-Length", responseText.length);
+      res.setHeader('Content-Type', 'text/plain');
+      res.setHeader('Content-Length', responseText.length);
       // Set the status code of the response
       res.statusCode = 200;
       // Write the response text to the response
       res.write(Buffer.from(responseText));
-    },
+    }
   },
   {
-    route: "/students",
-    handler(_, res) {
+    route: '/students',
+    handler (_, res) {
       // Initialize an array to store the parts of the response
-      const responseParts = ["This is the list of our students"];
+      const responseParts = ['This is the list of our students'];
 
       // Call the countStudents function
       countStudents(DB_FILE)
@@ -118,10 +118,10 @@ const SERVER_ROUTE_HANDLERS = [
           // If the promise is resolved, add the report to the response parts
           responseParts.push(report);
           // Join the response parts into a single string
-          const responseText = responseParts.join("\n");
+          const responseText = responseParts.join('\n');
           // Set the headers of the response
-          res.setHeader("Content-Type", "text/plain");
-          res.setHeader("Content-Length", responseText.length);
+          res.setHeader('Content-Type', 'text/plain');
+          res.setHeader('Content-Length', responseText.length);
           // Set the status code of the response
           res.statusCode = 200;
           // Write the response text to the response
@@ -133,21 +133,21 @@ const SERVER_ROUTE_HANDLERS = [
             err instanceof Error ? err.message : err.toString()
           );
           // Join the response parts into a single string
-          const responseText = responseParts.join("\n");
+          const responseText = responseParts.join('\n');
           // Set the headers of the response
-          res.setHeader("Content-Type", "text/plain");
-          res.setHeader("Content-Length", responseText.length);
+          res.setHeader('Content-Type', 'text/plain');
+          res.setHeader('Content-Length', responseText.length);
           // Set the status code of the response
           res.statusCode = 200;
           // Write the response text to the response
           res.write(Buffer.from(responseText));
         });
-    },
-  },
+    }
+  }
 ];
 
 // Listen for the 'request' event
-app.on("request", (req, res) => {
+app.on('request', (req, res) => {
   // For each route handler
   for (const routeHandler of SERVER_ROUTE_HANDLERS) {
     // If the route of the route handler matches the URL of the request
