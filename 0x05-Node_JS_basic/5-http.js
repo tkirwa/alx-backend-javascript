@@ -1,21 +1,28 @@
+// Import the required modules
 const http = require('http');
 const fs = require('fs');
 
+// Define the server and database details
 const PORT = 1245;
 const HOST = 'localhost';
-const app = http.createServer();
 const DB_FILE = process.argv.length > 2 ? process.argv[2] : '';
 
+// Function to count students in a database file
 const countStudents = (dataPath) => new Promise((resolve, reject) => {
+  // Check if dataPath is provided
   if (!dataPath) {
     reject(new Error('Cannot load the database'));
   }
+  // If dataPath is provided, read the file
   if (dataPath) {
     fs.readFile(dataPath, (err, data) => {
+      // Handle any errors
       if (err) {
         reject(new Error('Cannot load the database'));
       }
+      // If data is read successfully, process it
       if (data) {
+        // Initialize variables
         const reportParts = [];
         const fileLines = data.toString('utf-8').trim().split('\n');
         const studentGroups = {};
@@ -25,6 +32,7 @@ const countStudents = (dataPath) => new Promise((resolve, reject) => {
           dbFieldNames.length - 1
         );
 
+        // Process each line in the file
         for (const line of fileLines.slice(1)) {
           const studentRecord = line.split(',');
           const studentPropValues = studentRecord.slice(
@@ -42,6 +50,7 @@ const countStudents = (dataPath) => new Promise((resolve, reject) => {
           studentGroups[field].push(Object.fromEntries(studentEntries));
         }
 
+        // Generate the report
         const totalStudents = Object.values(studentGroups).reduce(
           (pre, cur) => (pre || []).length + cur.length
         );
@@ -59,6 +68,7 @@ const countStudents = (dataPath) => new Promise((resolve, reject) => {
   }
 });
 
+// Define the server route handlers
 const SERVER_ROUTE_HANDLERS = [
   {
     route: '/',
@@ -97,6 +107,10 @@ const SERVER_ROUTE_HANDLERS = [
   }
 ];
 
+// Create the server
+const app = http.createServer();
+
+// Handle incoming requests
 app.on('request', (req, res) => {
   for (const routeHandler of SERVER_ROUTE_HANDLERS) {
     if (routeHandler.route === req.url) {
@@ -106,8 +120,10 @@ app.on('request', (req, res) => {
   }
 });
 
+// Start the server
 app.listen(PORT, HOST, () => {
   process.stdout.write(`Server listening at -> http://${HOST}:${PORT}\n`);
 });
 
+// Export the server for testing
 module.exports = app;
