@@ -1,20 +1,36 @@
 const http = require('http');
+const { readFileSync } = require('fs'); // Use synchronous file read for simplicity
 
-// Extract command line arguments (assuming the database file is provided as an argument)
-const args = process.argv.slice(2);
+// Function to count students from the given file
+const countStudents = (databaseFile) => {
+  try {
+    const data = readFileSync(databaseFile, 'utf8');
+    const lines = data.split('\n').filter(line => line.trim() !== '');
 
-// Import the asynchronous function to count students from the given file
-const countStudents = require('./3-read_file_async');
+    const students = {
+      CS: [],
+      SWE: []
+    };
 
-// Database file path obtained from command line arguments
-const DATABASE = args[0];
+    for (const line of lines) {
+      const [name, age, field] = line.split(',');
+      if (name && age && field) {
+        students[field.trim()].push(name.trim());
+      }
+    }
+
+    return students;
+  } catch (error) {
+    throw new Error('Error reading the database file.');
+  }
+};
 
 // Server configuration
 const host = '127.0.0.1';
 const port = 1245;
 
 // Create an HTTP server
-const app = http.createServer(async (req, res) => {
+const app = http.createServer((req, res) => {
   // Set default status code and content type
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
@@ -24,24 +40,30 @@ const app = http.createServer(async (req, res) => {
 
   // Handle requests based on the URL path
   if (url === '/') {
-    res.write('Hello Holberton School!');
-    res.end();
-  }
-  if (url === '/students') {
-    res.write('This is the list of our students\n');
+    res.end('Hello Holberton School!');
+  } else if (url === '/students') {
     try {
-      // Call the asynchronous function to count students and retrieve the list
-      const students = await countStudents(DATABASE);
-      res.end(`${students.join('\n')}`);
-    } catch (error) {
-      // Handle errors from the asynchronous function
-      res.end(error.message);
-    }
-  }
+      // Call the function to count students
+      const students = countStudents('database.csv');
 
-  // If the URL path is not '/' or '/students', return a 404 response
-  res.statusCode = 404;
-  res.end();
+      // Construct the response
+      let response = 'This is the list of our students\n';
+      response += `Number of students: ${students.CS.length + students.SWE.length}\n`;
+      response += `Number of students in CS: ${students.CS.length}. List: ${students.CS.join(', ')}\n`;
+      response += `Number of students in SWE: ${students.SWE.length}. List: ${students.SWE.join(', ')}\n`;
+
+      // Send the response
+      res.end(response);
+    } catch (error) {
+      // Handle errors from the function
+      res.statusCode = 500;
+      res.end('Internal Server Error');
+    }
+  } else {
+    // If the URL path is not '/' or '/students', return a 404 response
+    res.statusCode = 404;
+    res.end('Not Found');
+  }
 });
 
 // Start the server and listen on the specified host and port
